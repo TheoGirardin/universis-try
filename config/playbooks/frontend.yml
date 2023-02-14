@@ -1,0 +1,33 @@
+---
+- name: Installation 
+  hosts: universis
+  tasks: 
+    - name: Create Working File
+      file:
+        path: /root/app
+        state: directory
+        owner: root
+        group: root
+        mode: 0755
+
+    - name: Clone repository from GitHub
+      git:
+        repo: https://gitlab.com/universis/universis-students.git
+        dest: /root/app
+        version: master
+        clone: yes
+
+    - name: Install Angular Cli
+      command: npm install -g @angular/cli@6
+      args:
+        chdir: /root/app/universis-students/
+
+    - name: Install NPM Dependencies
+      command: npm ci
+      args:
+        chdir: /root/app/universis-students/
+
+    - name: Start Angular app
+      command: ng serve
+      args:
+        chdir: /root/app/universis-students/

@@ -1,0 +1,5 @@
+[universis]
+localhost ansible_host="127.0.0.1"
+
+[all:vars]
+ansible_user="root"

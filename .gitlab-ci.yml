@@ -1,0 +1,20 @@
+image: node:14.21.2
+
+stages:
+  - checkdiff
+  - deploy
+
+frontend_checkdiff:
+  stage: checkdiff
+  script:
+    - ansible-playbook --check --diff config/playbooks/frontend.yml
+  only:
+    - master
+
+frontend_deploy:
+  stage: deploy
+  script:
+    - ansible-playbook config/playbooks/frontend.yml
+  when: manual
+  only:
+    - master
